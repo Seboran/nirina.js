@@ -4,3 +4,4 @@ dist/
 coverage/
 .vscode
 index.ts.bak
+.DS_Store

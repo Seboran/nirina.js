@@ -19,7 +19,7 @@ const onClickBouton = () => {
   console.log('salut')
   proxyCondition.valeur = !proxyCondition.valeur
 }
-const bouton1 = new BoutonHtml(onClickBouton, 'cliquez moi dessus!')
+const bouton1 = new BoutonHtml(onClickBouton, 'je ne regrette rien moi dessus!')
 const texte = new LeafHtml('un autre texte')
 const ifHtml = new IfHtml(fonctionsAAppeler, texte)
 const elements = new ElementsHtml(bouton1, ifHtml)

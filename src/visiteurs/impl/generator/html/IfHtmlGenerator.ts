@@ -19,9 +19,9 @@ export default class IfHtmlGenerator
         condition.push((valeur) => {
           const nIf = document.querySelector(`[if-${id}]`)
           if (valeur) {
-            nIf!.innerHTML = `<div if-${id}>${nirinaComponent.template}</div>`
+            nIf!.outerHTML = `<div if-${id}>${nirinaComponent.template}</div>`
           } else {
-            nIf!.innerHTML = `<div if-${id}/>`
+            nIf!.outerHTML = `<div if-${id}/>`
           }
         })
       },

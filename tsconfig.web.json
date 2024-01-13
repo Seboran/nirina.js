@@ -5,10 +5,12 @@
     "strict": true,
     "esModuleInterop": true,
     "outDir": "./dist",
+    "skipLibCheck": true,
     "typeRoots": ["./node_modules/@types"],
     "experimentalDecorators": true,
     "lib": ["DOM", "ES2015", "DOM.Iterable", "ScriptHost"], // Include DOM library for browser APIs
     "moduleResolution": "node" // Use Node.js style module resolution
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules/"]
 }
