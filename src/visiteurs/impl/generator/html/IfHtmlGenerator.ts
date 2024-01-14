@@ -28,7 +28,7 @@ export default class IfHtmlGenerator
           autreEnfantComponent.script()
         }
 
-        condition.push((valeur) => {
+        condition.addListener((valeur) => {
           const nIf = document.querySelector(`[if-${id}]`)
           if (valeur) {
             nIf!.outerHTML = `<div if-${id}>${nirinaComponent.template}</div>`

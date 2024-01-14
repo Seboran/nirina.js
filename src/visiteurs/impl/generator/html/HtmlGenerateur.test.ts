@@ -1,4 +1,4 @@
-import { describe, expect, test, vi, beforeEach } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import BoutonHtml from '../../../../model/html/bouton.model'
 import ElementsHtml from '../../../../model/html/elements.model'
 import IfHtml from '../../../../model/html/if.model'
@@ -7,6 +7,7 @@ import BoutonHtmlGenerator from './BoutonHtmlGenerator'
 import HtmlOrchestrateur from './HtmlOrchestrateur'
 
 import { Window } from 'happy-dom'
+import { ComputableValue } from '../../../../model/ComputedValue'
 import IfHtmlGenerator from './IfHtmlGenerator'
 
 // Create a new Window instance
@@ -82,23 +83,14 @@ describe('Éléments html générateur', () => {
 
 describe('Affichage conditionnel', () => {
   test('affiche du texte si et seulement si on clique sur un bouton', () => {
-    let condition = { valeur: false }
+    let condition = new ComputableValue(false)
 
-    const fonctionsAAppeler: ((valeur: boolean) => void)[] = []
-    const proxyCondition = new Proxy(condition, {
-      set(target, prop, newValue) {
-        // @ts-ignore
-        target[prop] = newValue
-        fonctionsAAppeler.forEach((f) => f(newValue))
-        return true
-      },
-    })
     const onClickBouton = () => {
-      proxyCondition.valeur = !proxyCondition.valeur
+      condition.value.state = !condition.value.state
     }
     const bouton1 = new BoutonHtml(onClickBouton, 'cliquez moi dessus!')
     const texte = new LeafHtml('un autre texte')
-    const ifHtml = new IfHtml(fonctionsAAppeler, texte)
+    const ifHtml = new IfHtml(condition, texte)
     const generateur = new HtmlOrchestrateur()
     const elements = new ElementsHtml(bouton1, ifHtml)
     const render = elements.accept(generateur)
@@ -120,24 +112,15 @@ describe('Affichage conditionnel', () => {
   })
 
   test('affiche du texte puis un autre texte', () => {
-    let condition = { valeur: false }
+    let condition = new ComputableValue(false)
 
-    const fonctionsAAppeler: ((valeur: boolean) => void)[] = []
-    const proxyCondition = new Proxy(condition, {
-      set(target, prop, newValue) {
-        // @ts-ignore
-        target[prop] = newValue
-        fonctionsAAppeler.forEach((f) => f(newValue))
-        return true
-      },
-    })
     const onClickBouton = () => {
-      proxyCondition.valeur = !proxyCondition.valeur
+      condition.value.state = !condition.value.state
     }
     const bouton1 = new BoutonHtml(onClickBouton, 'cliquez moi dessus!')
     const texte1 = new LeafHtml('un autre texte')
     const texte2 = new LeafHtml('un autre texte 2')
-    const ifHtml = new IfHtml(fonctionsAAppeler, texte1, texte2)
+    const ifHtml = new IfHtml(condition, texte1, texte2)
     const generateur = new HtmlOrchestrateur()
     const elements = new ElementsHtml(bouton1, ifHtml)
     const render = elements.accept(generateur)
