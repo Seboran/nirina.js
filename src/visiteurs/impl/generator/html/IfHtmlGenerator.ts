@@ -8,20 +8,32 @@ export default class IfHtmlGenerator
   implements VisiteurNoeud<NirinaComponent, IfHtml>
 {
   static nombreIfHtml = 0
-  visit({ condition, enfant }: IfHtml): NirinaComponent {
+  visit({ condition, enfant, autreEnfant }: IfHtml): NirinaComponent {
     const id = IfHtmlGenerator.nombreIfHtml
     const nirinaComponent = super.visit(enfant)
+    const autreEnfantComponent = autreEnfant
+      ? super.visit(autreEnfant)
+      : undefined
+    let elseTemplate: string
+    if (autreEnfantComponent) {
+      elseTemplate = `<div if-${id}>${autreEnfantComponent.template}</div>`
+    } else {
+      elseTemplate = `<div if-${id}/>`
+    }
     return {
-      template: `<div if-${id} />`,
+      template: elseTemplate,
       script: () => {
         nirinaComponent.script()
+        if (autreEnfantComponent) {
+          autreEnfantComponent.script()
+        }
 
         condition.push((valeur) => {
           const nIf = document.querySelector(`[if-${id}]`)
           if (valeur) {
             nIf!.outerHTML = `<div if-${id}>${nirinaComponent.template}</div>`
           } else {
-            nIf!.outerHTML = `<div if-${id}/>`
+            nIf!.outerHTML = elseTemplate
           }
         })
       },

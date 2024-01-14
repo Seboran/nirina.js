@@ -16,15 +16,14 @@ const proxyCondition = new Proxy(condition, {
   },
 })
 const onClickBouton = () => {
-  console.log('salut')
   proxyCondition.valeur = !proxyCondition.valeur
 }
 const bouton1 = new BoutonHtml(onClickBouton, 'je ne regrette rien moi dessus!')
 const texte = new LeafHtml('un autre texte')
-const ifHtml = new IfHtml(fonctionsAAppeler, texte)
+const texte2 = new LeafHtml('un autre texte2')
+const ifHtml = new IfHtml(fonctionsAAppeler, texte, texte2)
 const elements = new ElementsHtml(bouton1, ifHtml)
 const generateur = new HtmlOrchestrateur()
 const nirinaComposant = elements.accept(generateur)
-console.log(nirinaComposant)
 document.querySelector('#app')!.innerHTML = nirinaComposant.template
 nirinaComposant.script()

@@ -49,12 +49,10 @@ describe('Éléments html générateur', () => {
   test('affiche deux boutons', () => {
     const spy1 = vi.fn()
     const bouton1 = new BoutonHtml(() => {
-      console.log('first call')
       spy1()
     }, 'bouton1')
     const spy2 = vi.fn()
     const bouton2 = new BoutonHtml(() => {
-      console.debug('second call"')
       spy2()
     }, 'bouton2')
     const elements = new ElementsHtml(bouton1, bouton2)
@@ -96,7 +94,6 @@ describe('Affichage conditionnel', () => {
       },
     })
     const onClickBouton = () => {
-      console.log('salut')
       proxyCondition.valeur = !proxyCondition.valeur
     }
     const bouton1 = new BoutonHtml(onClickBouton, 'cliquez moi dessus!')
@@ -119,6 +116,45 @@ describe('Affichage conditionnel', () => {
     window.document.body.children[0].click()
     expect(window.document.body.innerHTML).toMatchInlineSnapshot(
       `"<button btn-1="">cliquez moi dessus!</button><div if-0=""></div>"`,
+    )
+  })
+
+  test('affiche du texte puis un autre texte', () => {
+    let condition = { valeur: false }
+
+    const fonctionsAAppeler: ((valeur: boolean) => void)[] = []
+    const proxyCondition = new Proxy(condition, {
+      set(target, prop, newValue) {
+        // @ts-ignore
+        target[prop] = newValue
+        fonctionsAAppeler.forEach((f) => f(newValue))
+        return true
+      },
+    })
+    const onClickBouton = () => {
+      proxyCondition.valeur = !proxyCondition.valeur
+    }
+    const bouton1 = new BoutonHtml(onClickBouton, 'cliquez moi dessus!')
+    const texte1 = new LeafHtml('un autre texte')
+    const texte2 = new LeafHtml('un autre texte 2')
+    const ifHtml = new IfHtml(fonctionsAAppeler, texte1, texte2)
+    const generateur = new HtmlOrchestrateur()
+    const elements = new ElementsHtml(bouton1, ifHtml)
+    const render = elements.accept(generateur)
+    window.document.body.innerHTML = render.template
+    render.script()
+    expect(window.document.body.innerHTML).toMatchInlineSnapshot(
+      `"<button btn-1="">cliquez moi dessus!</button><div if-0="">un autre texte 2</div>"`,
+    )
+    // @ts-ignore
+    window.document.body.children[0].click()
+    expect(window.document.body.innerHTML).toMatchInlineSnapshot(
+      `"<button btn-1="">cliquez moi dessus!</button><div if-0="">un autre texte</div>"`,
+    )
+    // @ts-ignore
+    window.document.body.children[0].click()
+    expect(window.document.body.innerHTML).toMatchInlineSnapshot(
+      `"<button btn-1="">cliquez moi dessus!</button><div if-0="">un autre texte 2</div>"`,
     )
   })
 })

@@ -7,6 +7,7 @@ export default class IfHtml extends NoeudModel {
   constructor(
     public condition: ((valeur: boolean) => void)[],
     public enfant: NoeudModel,
+    public autreEnfant: NoeudModel | undefined = undefined,
   ) {
     super()
   }
