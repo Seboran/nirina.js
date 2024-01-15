@@ -1,3 +1,4 @@
+import BoutonBuilder from './builder/BoutonBuilder'
 import { ComputableValue } from './model/ComputedValue'
 import BoutonHtml from './model/html/bouton.model'
 import ElementsHtml from './model/html/elements.model'
@@ -9,7 +10,12 @@ let condition = new ComputableValue(false)
 const onClickBouton = () => {
   condition.value.state = !condition.value.state
 }
-const bouton1 = new BoutonHtml(onClickBouton, 'je ne regrette rien moi dessus!')
+const bouton1 = BoutonBuilder()
+  .setOnClick(onClickBouton)
+  .setText('je ne regrette rien moi dessus!')
+  .setCss('color', 'red')
+  .build()
+
 const texte = new LeafHtml('un autre texte')
 const texte2 = new LeafHtml('un autre texte2')
 const ifHtml = new IfHtml(condition, texte, texte2)

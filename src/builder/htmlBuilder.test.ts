@@ -7,6 +7,7 @@ import HtmlOrchestrateur from '../visiteurs/impl/generator/html/HtmlOrchestrateu
 import { Window } from 'happy-dom'
 import { ComputableValue } from '../model/ComputedValue'
 import BoutonBuilder from './BoutonBuilder'
+import LeafBuilder from './LeafBuilder'
 
 // Create a new Window instance
 const window = new Window()
@@ -20,14 +21,15 @@ beforeEach(() => {
 })
 
 describe('html builder', () => {
-  test('construire un site avec un texte', () => {
+  test('construire un site avec un texte rouge', () => {
     const afficher = new ComputableValue(false)
     const onClickBouton = () => {
       afficher.value.state = !afficher.value.state
     }
-    const bouton1 = BoutonBuilder.init()
+    const bouton1 = BoutonBuilder()
       .setOnClick(onClickBouton)
       .setText('je ne regrette rien moi dessus!')
+      .setCss('color', 'red')
       .build()
     const texte = new LeafHtml('un autre texte')
     const texte2 = new LeafHtml('un autre texte2')
@@ -39,17 +41,17 @@ describe('html builder', () => {
     window.document.body.innerHTML = nirinaComposant.template
     nirinaComposant.script()
     expect(window.document.body.innerHTML).toMatchInlineSnapshot(
-      `"<button btn-1="">je ne regrette rien moi dessus!</button><div if-0="">un autre texte2</div>"`,
+      `"<button btn-1="" style="color: red">je ne regrette rien moi dessus!</button><div if-0="">un autre texte2</div>"`,
     )
     // @ts-ignore
     window.document.body.children[0].click()
     expect(window.document.body.innerHTML).toMatchInlineSnapshot(
-      `"<button btn-1="">je ne regrette rien moi dessus!</button><div if-0="">un autre texte</div>"`,
+      `"<button btn-1="" style="color: red">je ne regrette rien moi dessus!</button><div if-0="">un autre texte</div>"`,
     )
     // @ts-ignore
     window.document.body.children[0].click()
     expect(window.document.body.innerHTML).toMatchInlineSnapshot(
-      `"<button btn-1="">je ne regrette rien moi dessus!</button><div if-0="">un autre texte2</div>"`,
+      `"<button btn-1="" style="color: red">je ne regrette rien moi dessus!</button><div if-0="">un autre texte2</div>"`,
     )
   })
 })

@@ -9,6 +9,7 @@ import HtmlOrchestrateur from './HtmlOrchestrateur'
 import { Window } from 'happy-dom'
 import { ComputableValue } from '../../../../model/ComputedValue'
 import IfHtmlGenerator from './IfHtmlGenerator'
+import NativeModel from '../../../../model/html/native.model'
 
 // Create a new Window instance
 const window = new Window()
@@ -138,6 +139,30 @@ describe('Affichage conditionnel', () => {
     window.document.body.children[0].click()
     expect(window.document.body.innerHTML).toMatchInlineSnapshot(
       `"<button btn-1="">cliquez moi dessus!</button><div if-0="">un autre texte 2</div>"`,
+    )
+  })
+})
+
+describe('éléments natifs', () => {
+  test('affiche un span avec un texte', () => {
+    const span = new NativeModel('span', [new LeafHtml('bonjour')])
+    const generateur = new HtmlOrchestrateur()
+
+    const { template } = span.accept(generateur)
+    expect(template).toEqual('<span>bonjour</span>')
+  })
+
+  test("affiche un texte rouge à l'intérieur de divs un peu fancy", () => {
+    const css: Record<string, string | number> = {}
+    css.color = 'red'
+    const nativeModel = new NativeModel('span', [
+      new NativeModel('div', [new LeafHtml('salut')], css),
+    ])
+
+    expect(
+      nativeModel.accept(new HtmlOrchestrateur()).template,
+    ).toMatchInlineSnapshot(
+      `"<span><div style="color: red">salut</div></span>"`,
     )
   })
 })

@@ -9,8 +9,22 @@ export default class BoutonHtmlGenerator
   visit(node: BoutonHtml): NirinaComponent {
     const id = ++BoutonHtmlGenerator.nombreBoutons
     const { texte, onClick } = node
+    const style: Record<string, string | number> = node.style
+    const css = Object.entries(style)
+      .map(([property, value]) => `${property}: ${value}`)
+      .join(';')
+
+    const styleText = css !== '' ? `style="${css}"` : ''
+    const attrs = []
+    attrs.push(`btn-${id}`)
+    if (styleText) {
+      attrs.push(`${styleText}`)
+    }
+
     return {
-      template: `<button btn-${id}>${texte}</button>`,
+      template: `<button${
+        attrs ? ' ' + attrs.join(' ') : ''
+      }>${texte}</button>`,
       script: () => {
         const component = document.querySelector(`[btn-${id}]`)
 

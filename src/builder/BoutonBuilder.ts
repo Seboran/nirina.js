@@ -4,7 +4,7 @@ import IBuilder from './IBuilder'
 
 type AnyFunction = (...args: any[]) => any
 
-export default class BoutonBuilder
+export class BoutonBuilder
   extends AbstractBuilder
   implements IBuilder<BoutonHtml>
 {
@@ -26,6 +26,8 @@ export default class BoutonBuilder
   }
 
   build() {
-    return new BoutonHtml(this.onClick, this.texte)
+    return new BoutonHtml(this.onClick, this.texte).setStyle(this.style)
   }
 }
+
+export default () => new BoutonBuilder()

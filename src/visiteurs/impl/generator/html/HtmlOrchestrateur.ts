@@ -4,6 +4,7 @@ import {
   elements_name,
   ifName,
   leafName,
+  spanName,
 } from '../../../../model/html/node_constantes'
 import VisiteurNoeud from '../../../VisiteurNoeud'
 import { AbstractVisiteurOrchestrateur } from '../../orchestrateur'
@@ -11,6 +12,7 @@ import BoutonHtmlGenerator from './BoutonHtmlGenerator'
 import ElementsHtmlGenerator from './ElementsHtmlGenerator'
 import IfHtmlGenerator from './IfHtmlGenerator'
 import LeafHtmlGenerator from './LeafHtmlGenerator'
+import NativeGenerator from './NativeGenerator'
 import { NirinaComponent } from './NirinaComponent'
 
 const visiteurMappings: Array<
@@ -20,6 +22,8 @@ const visiteurMappings: Array<
   [elements_name, ElementsHtmlGenerator],
   [ifName, IfHtmlGenerator],
   [leafName, LeafHtmlGenerator],
+  [spanName, NativeGenerator],
+  ['div', NativeGenerator],
 ]
 
 export default class HtmlOrchestrateur extends AbstractVisiteurOrchestrateur<NirinaComponent> {
