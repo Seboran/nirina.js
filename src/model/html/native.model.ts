@@ -5,7 +5,7 @@ export default class NativeModel extends NoeudModel {
   constructor(
     public name: string,
     public children: NoeudModel[],
-    public css: Record<string, string | number> = {},
+    public style: Record<string, string | number> = {},
     ...attrs: [string, string][]
   ) {
     super()

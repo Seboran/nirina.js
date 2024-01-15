@@ -10,30 +10,44 @@ export default class IfHtmlGenerator
   static nombreIfHtml = 0
   visit({ condition, enfant, autreEnfant }: IfHtml): NirinaComponent {
     const id = IfHtmlGenerator.nombreIfHtml
+    enfant.uniqueId = `if-${id}`
     const nirinaComponent = super.visit(enfant)
+    if (autreEnfant) {
+      autreEnfant.uniqueId = `if-${id}`
+    }
     const autreEnfantComponent = autreEnfant
       ? super.visit(autreEnfant)
       : undefined
-    let elseTemplate: string
-    if (autreEnfantComponent) {
-      elseTemplate = `<div if-${id}>${autreEnfantComponent.template}</div>`
-    } else {
-      elseTemplate = `<div if-${id}/>`
-    }
     return {
-      template: elseTemplate,
+      template: condition.value.state
+        ? nirinaComponent.template
+        : autreEnfantComponent?.template ?? '',
       script: () => {
         nirinaComponent.script()
+        let previousElement: ChildNode | null | undefined
         if (autreEnfantComponent) {
           autreEnfantComponent.script()
+        } else {
+          previousElement = document.querySelector(`[if-${id}]`)
+            ?.previousSibling
+          console.log("pas d'autre enfant", previousElement)
         }
 
         condition.addListener((valeur) => {
-          const nIf = document.querySelector(`[if-${id}]`)
+          console.log('je regarde le composant', `[if-${id}]`)
           if (valeur) {
-            nIf!.outerHTML = `<div if-${id}>${nirinaComponent.template}</div>`
+            let nIf
+            if (previousElement) {
+              console.log('je préfère vérifier')
+              previousElement.append('span')
+              // nIf = previousElement.nextElementSibling
+            } else {
+              nIf = document.querySelector(`[if-${id}]`)
+              nIf!.outerHTML = nirinaComponent.template
+            }
           } else {
-            nIf!.outerHTML = elseTemplate
+            document.querySelector(`[if-${id}]`)!.outerHTML =
+              autreEnfantComponent?.template ?? ''
           }
         })
       },

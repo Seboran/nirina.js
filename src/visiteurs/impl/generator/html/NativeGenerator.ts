@@ -7,7 +7,12 @@ export default class NativeGenerator
   extends AbstractVisiteurOrchestrateur<NirinaComponent>
   implements VisiteurNoeud<NirinaComponent, NativeModel>
 {
-  visit({ name, children, css }: NativeModel): NirinaComponent {
+  visit({
+    name,
+    children,
+    style: css,
+    uniqueId,
+  }: NativeModel): NirinaComponent {
     const nirinaComponents = children.map(super.visit.bind(this))
     const templates = nirinaComponents.map(({ template }) => template).join('')
     const style = Object.entries(css)
@@ -19,6 +24,10 @@ export default class NativeGenerator
     if (styleText) {
       attrs.push(`${styleText}`)
     }
+    if (uniqueId) {
+      attrs.push(`${uniqueId}`)
+    }
+
     return {
       script: () => {
         nirinaComponents.forEach(({ script }) => script())

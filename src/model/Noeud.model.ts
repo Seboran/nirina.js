@@ -5,6 +5,7 @@ type Style = Record<string, string | number>
 export default abstract class NoeudModel {
   public name = ''
   public style: Style = {}
+  public uniqueId: string = ''
 
   setStyle(style: Style): this {
     this.style = style

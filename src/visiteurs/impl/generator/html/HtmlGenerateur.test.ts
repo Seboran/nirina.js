@@ -91,14 +91,14 @@ describe('Affichage conditionnel', () => {
     }
     const bouton1 = new BoutonHtml(onClickBouton, 'cliquez moi dessus!')
     const texte = new LeafHtml('un autre texte')
-    const ifHtml = new IfHtml(condition, texte)
+    const ifHtml = new IfHtml(condition, new NativeModel('div', [texte]))
     const generateur = new HtmlOrchestrateur()
     const elements = new ElementsHtml(bouton1, ifHtml)
     const render = elements.accept(generateur)
     window.document.body.innerHTML = render.template
     render.script()
     expect(window.document.body.innerHTML).toMatchInlineSnapshot(
-      `"<button btn-1="">cliquez moi dessus!</button><div if-0=""></div>"`,
+      `"<button btn-1="">cliquez moi dessus!</button>"`,
     )
     // @ts-ignore
     window.document.body.children[0].click()
@@ -108,7 +108,7 @@ describe('Affichage conditionnel', () => {
     // @ts-ignore
     window.document.body.children[0].click()
     expect(window.document.body.innerHTML).toMatchInlineSnapshot(
-      `"<button btn-1="">cliquez moi dessus!</button><div if-0=""></div>"`,
+      `"<button btn-1="">cliquez moi dessus!</button>"`,
     )
   })
 
@@ -121,7 +121,11 @@ describe('Affichage conditionnel', () => {
     const bouton1 = new BoutonHtml(onClickBouton, 'cliquez moi dessus!')
     const texte1 = new LeafHtml('un autre texte')
     const texte2 = new LeafHtml('un autre texte 2')
-    const ifHtml = new IfHtml(condition, texte1, texte2)
+    const ifHtml = new IfHtml(
+      condition,
+      new NativeModel('div', [texte1]),
+      new NativeModel('div', [texte2]),
+    )
     const generateur = new HtmlOrchestrateur()
     const elements = new ElementsHtml(bouton1, ifHtml)
     const render = elements.accept(generateur)
@@ -139,6 +143,40 @@ describe('Affichage conditionnel', () => {
     window.document.body.children[0].click()
     expect(window.document.body.innerHTML).toMatchInlineSnapshot(
       `"<button btn-1="">cliquez moi dessus!</button><div if-0="">un autre texte 2</div>"`,
+    )
+  })
+
+  test('affiche du texte puis un autre texte', () => {
+    let condition = new ComputableValue(true)
+
+    const onClickBouton = () => {
+      condition.value.state = !condition.value.state
+    }
+    const bouton1 = new BoutonHtml(onClickBouton, 'cliquez moi dessus!')
+    const texte1 = new LeafHtml('un autre texte')
+    const texte2 = new LeafHtml('un autre texte 2')
+    const ifHtml = new IfHtml(
+      condition,
+      new NativeModel('div', [texte1]),
+      new NativeModel('div', [texte2]),
+    )
+    const generateur = new HtmlOrchestrateur()
+    const elements = new ElementsHtml(bouton1, ifHtml)
+    const render = elements.accept(generateur)
+    window.document.body.innerHTML = render.template
+    render.script()
+    expect(window.document.body.innerHTML).toMatchInlineSnapshot(
+      `"<button btn-1="">cliquez moi dessus!</button><div if-0="">un autre texte</div>"`,
+    )
+    // @ts-ignore
+    window.document.body.children[0].click()
+    expect(window.document.body.innerHTML).toMatchInlineSnapshot(
+      `"<button btn-1="">cliquez moi dessus!</button><div if-0="">un autre texte 2</div>"`,
+    )
+    // @ts-ignore
+    window.document.body.children[0].click()
+    expect(window.document.body.innerHTML).toMatchInlineSnapshot(
+      `"<button btn-1="">cliquez moi dessus!</button><div if-0="">un autre texte</div>"`,
     )
   })
 })

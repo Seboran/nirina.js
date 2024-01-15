@@ -8,6 +8,10 @@ import { Window } from 'happy-dom'
 import { ComputableValue } from '../model/ComputedValue'
 import BoutonBuilder from './BoutonBuilder'
 import LeafBuilder from './LeafBuilder'
+import NativeBuilder from './NativeBuilder'
+import TextBuilder from './TextBuilder'
+import IfBuilder from './IfBuilder'
+import NativeModel from '../model/html/native.model'
 
 // Create a new Window instance
 const window = new Window()
@@ -33,7 +37,11 @@ describe('html builder', () => {
       .build()
     const texte = new LeafHtml('un autre texte')
     const texte2 = new LeafHtml('un autre texte2')
-    const ifHtml = new IfHtml(afficher, texte, texte2)
+    const ifHtml = new IfHtml(
+      afficher,
+      new NativeModel('div', [texte]),
+      new NativeModel('div', [texte2]),
+    )
     const elements = new ElementsHtml(bouton1, ifHtml)
     const generateur = new HtmlOrchestrateur()
     const nirinaComposant = elements.accept(generateur)
@@ -53,5 +61,28 @@ describe('html builder', () => {
     expect(window.document.body.innerHTML).toMatchInlineSnapshot(
       `"<button btn-1="" style="color: red">je ne regrette rien moi dessus!</button><div if-0="">un autre texte2</div>"`,
     )
+  })
+})
+
+describe('native builder', () => {
+  test('faire des divs et des spans imbriqués', () => {
+    const mesDivsImbriquées = NativeBuilder('div')
+      .addChild(
+        NativeBuilder('span').addChild(TextBuilder('bonjour').build()).build(),
+      )
+      .setCss('color', 'green')
+      .build()
+
+    const nirinaComposant = mesDivsImbriquées.accept(new HtmlOrchestrateur())
+
+    expect(nirinaComposant.template).toMatchInlineSnapshot(
+      `"<div style="color: green"><span>bonjour</span></div>"`,
+    )
+  })
+})
+
+describe('gestion des if builder', () => {
+  test('faire des ifs et des pas ifs', () => {
+    // IfBuilder(\)
   })
 })
