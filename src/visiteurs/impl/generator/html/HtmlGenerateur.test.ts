@@ -98,7 +98,7 @@ describe('Affichage conditionnel', () => {
     window.document.body.innerHTML = render.template
     render.script()
     expect(window.document.body.innerHTML).toMatchInlineSnapshot(
-      `"<button btn-1="">cliquez moi dessus!</button>"`,
+      `"<button btn-1="">cliquez moi dessus!</button><div if-0="" style="display: none"></div>"`,
     )
     // @ts-ignore
     window.document.body.children[0].click()
@@ -108,7 +108,7 @@ describe('Affichage conditionnel', () => {
     // @ts-ignore
     window.document.body.children[0].click()
     expect(window.document.body.innerHTML).toMatchInlineSnapshot(
-      `"<button btn-1="">cliquez moi dessus!</button>"`,
+      `"<button btn-1="">cliquez moi dessus!</button><div if-0="" style="display: none"></div>"`,
     )
   })
 
@@ -202,7 +202,7 @@ describe('Affichage conditionnel', () => {
     // @ts-ignore
     window.document.body.children[0].click()
     expect(window.document.body.innerHTML).toMatchInlineSnapshot(
-      `"<button btn-1="">cliquez moi dessus!</button>"`,
+      `"<button btn-1="">cliquez moi dessus!</button><div if-0="" style="display: none"></div><div if-1="" style="display: none"></div>"`,
     )
   })
 })

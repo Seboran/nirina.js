@@ -10,35 +10,32 @@ export default class IfHtmlGenerator
   static nombreIfHtml = 0
   visit({ condition, enfant, autreEnfant }: IfHtml): NirinaComponent {
     const id = IfHtmlGenerator.nombreIfHtml++
-    enfant.uniqueId = `if-${id}`
+    const uniqueId = `if-${id}`
+    enfant.uniqueId = uniqueId
     const nirinaComponent = super.visit(enfant)
     if (autreEnfant) {
-      autreEnfant.uniqueId = `if-${id}`
+      autreEnfant.uniqueId = uniqueId
     }
     const autreEnfantComponent = autreEnfant
       ? super.visit(autreEnfant)
       : undefined
+    const emptyIf = `<div ${uniqueId} style="display: none"/>`
     return {
       template: condition.value.state
         ? nirinaComponent.template
-        : autreEnfantComponent?.template ?? '',
+        : autreEnfantComponent?.template ?? emptyIf,
       script: () => {
         nirinaComponent.script()
-        let previousElement: ChildNode | null | undefined
         if (autreEnfantComponent) {
           autreEnfantComponent.script()
-        } else {
-          previousElement = document.querySelector(`[if-${id}]`)
-            ?.previousSibling
         }
 
         condition.addListener((valeur) => {
+          let nIf = document.querySelector(`[${uniqueId}]`)
           if (valeur) {
-            let nIf = document.querySelector(`[if-${id}]`)
             nIf!.outerHTML = nirinaComponent.template
           } else {
-            document.querySelector(`[if-${id}]`)!.outerHTML =
-              autreEnfantComponent?.template ?? ''
+            nIf!.outerHTML = autreEnfantComponent?.template ?? emptyIf
           }
         })
       },
