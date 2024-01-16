@@ -9,7 +9,7 @@ export default class IfHtmlGenerator
 {
   static nombreIfHtml = 0
   visit({ condition, enfant, autreEnfant }: IfHtml): NirinaComponent {
-    const id = IfHtmlGenerator.nombreIfHtml
+    const id = IfHtmlGenerator.nombreIfHtml++
     enfant.uniqueId = `if-${id}`
     const nirinaComponent = super.visit(enfant)
     if (autreEnfant) {
@@ -30,21 +30,12 @@ export default class IfHtmlGenerator
         } else {
           previousElement = document.querySelector(`[if-${id}]`)
             ?.previousSibling
-          console.log("pas d'autre enfant", previousElement)
         }
 
         condition.addListener((valeur) => {
-          console.log('je regarde le composant', `[if-${id}]`)
           if (valeur) {
-            let nIf
-            if (previousElement) {
-              console.log('je préfère vérifier')
-              previousElement.append('span')
-              // nIf = previousElement.nextElementSibling
-            } else {
-              nIf = document.querySelector(`[if-${id}]`)
-              nIf!.outerHTML = nirinaComponent.template
-            }
+            let nIf = document.querySelector(`[if-${id}]`)
+            nIf!.outerHTML = nirinaComponent.template
           } else {
             document.querySelector(`[if-${id}]`)!.outerHTML =
               autreEnfantComponent?.template ?? ''

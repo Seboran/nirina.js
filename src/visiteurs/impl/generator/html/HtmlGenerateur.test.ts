@@ -179,6 +179,32 @@ describe('Affichage conditionnel', () => {
       `"<button btn-1="">cliquez moi dessus!</button><div if-0="">un autre texte</div>"`,
     )
   })
+
+  test('afficher deux éléments, puis les faire disparaître', () => {
+    let condition = new ComputableValue(true)
+
+    const onClickBouton = () => {
+      condition.value.state = !condition.value.state
+    }
+    const bouton1 = new BoutonHtml(onClickBouton, 'cliquez moi dessus!')
+    const texte1 = new LeafHtml('un autre texte')
+    const texte2 = new LeafHtml('un autre texte 2')
+    const ifHtml1 = new IfHtml(condition, new NativeModel('div', [texte1]))
+    const ifHtml2 = new IfHtml(condition, new NativeModel('div', [texte2]))
+    const generateur = new HtmlOrchestrateur()
+    const elements = new ElementsHtml(bouton1, ifHtml1, ifHtml2)
+    const render = elements.accept(generateur)
+    window.document.body.innerHTML = render.template
+    render.script()
+    expect(window.document.body.innerHTML).toMatchInlineSnapshot(
+      `"<button btn-1="">cliquez moi dessus!</button><div if-0="">un autre texte</div><div if-1="">un autre texte 2</div>"`,
+    )
+    // @ts-ignore
+    window.document.body.children[0].click()
+    expect(window.document.body.innerHTML).toMatchInlineSnapshot(
+      `"<button btn-1="">cliquez moi dessus!</button>"`,
+    )
+  })
 })
 
 describe('éléments natifs', () => {
