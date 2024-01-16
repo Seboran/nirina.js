@@ -1,7 +1,7 @@
-import BoutonBuilder from './builder/BoutonBuilder'
-import IfBuilder from './builder/IfBuilder'
-import NativeBuilder from './builder/NativeBuilder'
-import TextBuilder from './builder/TextBuilder'
+import Button from './builder/BoutonBuilder'
+import If from './builder/IfBuilder'
+import { Div } from './builder/NativeBuilder'
+import Text from './builder/TextBuilder'
 import { ComputableValue } from './model/ComputedValue'
 import HtmlOrchestrateur from './visiteurs/impl/generator/html/HtmlOrchestrateur'
 
@@ -10,25 +10,23 @@ const onClickBouton = () => {
   condition.value.state = !condition.value.state
 }
 
-const elements = NativeBuilder('div')
+const elements = Div()
   .setCss('background-color', '#F0F0F0')
   .setCss('display', 'flex')
   .setCss('flex-direction', 'row')
   .setCss('justify-content', 'space-between')
   .addChild(
-    IfBuilder(
+    If(
       condition,
-      NativeBuilder('div')
-        .setCss('padding', '20px')
-        .addChild(TextBuilder('bonjour')),
-    ).else(NativeBuilder('div').addChild(TextBuilder('au revoir'))),
+      Div().setCss('padding', '20px').addChild(Text('bonjour')),
+    ).else(Div().addChild(Text('au revoir'))),
   )
-  .addChild(NativeBuilder('div').addChild(TextBuilder('world')))
+  .addChild(Div().addChild(Text('world')))
   .addChild(
-    NativeBuilder('div')
-      .addChild(TextBuilder('ouaip ?'))
+    Div()
+      .addChild(Text('ouaip ?'))
       .addChild(
-        BoutonBuilder()
+        Button()
           .setOnClick(onClickBouton)
           .setText('je fais apparaître quelque chose'),
       ),
