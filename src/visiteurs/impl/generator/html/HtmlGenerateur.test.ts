@@ -10,6 +10,11 @@ import { Window } from 'happy-dom'
 import { ComputableValue } from '../../../../model/ComputedValue'
 import IfHtmlGenerator from './IfHtmlGenerator'
 import NativeModel from '../../../../model/html/native.model'
+import ForHtml from '../../../../model/html/for.model'
+import { ComputedList } from '../../../../model/ComputedList'
+import { Div } from '../../../../builder/NativeBuilder'
+import TextBuilder from '../../../../builder/TextBuilder'
+import { NoeudModel } from '../../../../model'
 
 // Create a new Window instance
 const window = new Window()
@@ -227,6 +232,49 @@ describe('éléments natifs', () => {
       nativeModel.accept(new HtmlOrchestrateur()).template,
     ).toMatchInlineSnapshot(
       `"<span><div style="color: red">salut</div></span>"`,
+    )
+  })
+})
+
+describe("liste dynamique d'éléments", () => {
+  test('affiche 3 éléments', () => {
+    const listeDynamique = new ComputedList<NoeudModel>([
+      Div().addChild(TextBuilder('1')).addId('div-1').build(),
+      Div().addChild(TextBuilder('2')).addId('div-2').build(),
+      Div().addChild(TextBuilder('3')).addId('div-3').build(),
+    ])
+    const forHtml = new ForHtml(listeDynamique)
+    const generateur = new HtmlOrchestrateur()
+
+    const { template } = forHtml.accept(generateur)
+    expect(template).toMatchInlineSnapshot(
+      '"<div div-1>1</div><div div-2>2</div><div div-3>3</div>"',
+    )
+  })
+  test('affiche 2, puis 3 éléments', () => {
+    const listeDynamique = new ComputedList<NoeudModel>([
+      Div().addChild(TextBuilder('1')).addId('div-1').build(),
+      Div().addChild(TextBuilder('2')).addId('div-2').build(),
+    ])
+    const forHtml = new ForHtml(listeDynamique)
+    const generateur = new HtmlOrchestrateur()
+
+    const render = forHtml.accept(generateur)
+    window.document.body.innerHTML = render.template
+    render.script()
+
+    expect(window.document.body.innerHTML).toMatchInlineSnapshot(
+      '"<div div-1="">1</div><div div-2="">2</div>"',
+    )
+
+    listeDynamique.value.state = [
+      Div().addChild(TextBuilder('1')).build(),
+      Div().addChild(TextBuilder('2')).build(),
+      Div().addChild(TextBuilder('3')).build(),
+    ]
+
+    expect(window.document.body.innerHTML).toMatchInlineSnapshot(
+      '"<div div-1="">1</div><div div-2="">2</div><div div-3="">3</div>"',
     )
   })
 })

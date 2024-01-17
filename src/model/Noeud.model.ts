@@ -12,6 +12,11 @@ export default abstract class NoeudModel {
     return this
   }
 
+  setUniqueId(id: string): this {
+    this.uniqueId = id
+    return this
+  }
+
   accept<T>(visitor: VisiteurNoeud<T, NoeudModel>): T {
     return visitor.visit(this)
   }
