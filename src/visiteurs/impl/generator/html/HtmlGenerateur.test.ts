@@ -14,7 +14,7 @@ import ForHtml from '../../../../model/html/for.model'
 import { ComputedList } from '../../../../model/ComputedList'
 import { Div } from '../../../../builder/NativeBuilder'
 import TextBuilder from '../../../../builder/TextBuilder'
-import { NoeudModel } from '../../../../model'
+import type { NoeudModel } from '../../../../model'
 import ForHtmlGenerator from './ForHtmlGenerator'
 
 // Create a new Window instance
@@ -91,7 +91,7 @@ describe('Éléments html générateur', () => {
 
 describe('Affichage conditionnel', () => {
   test('affiche du texte si et seulement si on clique sur un bouton', () => {
-    let condition = new ComputableValue(false)
+    const condition = new ComputableValue(false)
 
     const onClickBouton = () => {
       condition.value.state = !condition.value.state
@@ -120,7 +120,7 @@ describe('Affichage conditionnel', () => {
   })
 
   test('affiche du texte puis un autre texte', () => {
-    let condition = new ComputableValue(false)
+    const condition = new ComputableValue(false)
 
     const onClickBouton = () => {
       condition.value.state = !condition.value.state
@@ -154,7 +154,7 @@ describe('Affichage conditionnel', () => {
   })
 
   test('affiche du texte puis un autre texte', () => {
-    let condition = new ComputableValue(true)
+    const condition = new ComputableValue(true)
 
     const onClickBouton = () => {
       condition.value.state = !condition.value.state
@@ -188,7 +188,7 @@ describe('Affichage conditionnel', () => {
   })
 
   test('afficher deux éléments, puis les faire disparaître', () => {
-    let condition = new ComputableValue(true)
+    const condition = new ComputableValue(true)
 
     const onClickBouton = () => {
       condition.value.state = !condition.value.state

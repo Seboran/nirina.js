@@ -5,7 +5,7 @@ import Text from './builder/TextBuilder'
 import { ComputableValue } from './model/ComputedValue'
 import HtmlOrchestrateur from './visiteurs/impl/generator/html/HtmlOrchestrateur'
 
-let condition = new ComputableValue(true)
+const condition = new ComputableValue(true)
 const onClickBouton = () => {
   condition.value.state = !condition.value.state
 }

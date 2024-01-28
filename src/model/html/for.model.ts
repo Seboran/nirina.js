@@ -1,4 +1,4 @@
-import { ComputedList } from '../ComputedList'
+import type { ComputedList } from '../ComputedList'
 import NoeudModel from '../Noeud.model'
 
 export default class ForHtml extends NoeudModel {

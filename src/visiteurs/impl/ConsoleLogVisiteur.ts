@@ -1,7 +1,7 @@
 import { applyMethodDecoratorToAllMethods } from '../../decorators/applyMethodDecoratorToAllMethods'
 import { consolelogDecorator } from '../../decorators/consolelogDecorator'
-import NoeudModel from '../../model/Noeud.model'
-import VisiteurNoeud from '../VisiteurNoeud'
+import type NoeudModel from '../../model/Noeud.model'
+import type VisiteurNoeud from '../VisiteurNoeud'
 
 @applyMethodDecoratorToAllMethods(consolelogDecorator)
 export default class ConsoleLogVisiteur

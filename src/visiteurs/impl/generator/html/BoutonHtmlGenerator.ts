@@ -1,6 +1,6 @@
-import BoutonHtml from '../../../../model/html/bouton.model'
-import VisiteurNoeud from '../../../VisiteurNoeud'
-import { NirinaComponent } from './NirinaComponent'
+import type BoutonHtml from '../../../../model/html/bouton.model'
+import type VisiteurNoeud from '../../../VisiteurNoeud'
+import type { NirinaComponent } from './NirinaComponent'
 
 export default class BoutonHtmlGenerator
   implements VisiteurNoeud<NirinaComponent, BoutonHtml>

@@ -1,7 +1,7 @@
-import ElementsHtml from '../../../../model/html/elements.model'
-import VisiteurNoeud from '../../../VisiteurNoeud'
+import type ElementsHtml from '../../../../model/html/elements.model'
+import type VisiteurNoeud from '../../../VisiteurNoeud'
 import { AbstractVisiteurOrchestrateur } from '../../orchestrateur'
-import { NirinaComponent } from './NirinaComponent'
+import type { NirinaComponent } from './NirinaComponent'
 
 export default class ElementsHtmlGenerator
   extends AbstractVisiteurOrchestrateur<NirinaComponent>

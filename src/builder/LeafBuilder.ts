@@ -1,6 +1,6 @@
 import LeafHtml from '../model/html/leaf.model'
 import AbstractBuilder from './AbstractBuilder'
-import IBuilder from './IBuilder'
+import type IBuilder from './IBuilder'
 
 class LeafBuilder extends AbstractBuilder implements IBuilder<LeafHtml> {
   private text: string = ''

@@ -1,7 +1,7 @@
 import { NoeudModel } from '../model'
 import NativeModel from '../model/html/native.model'
 import AbstractBuilder from './AbstractBuilder'
-import IBuilder from './IBuilder'
+import type IBuilder from './IBuilder'
 
 class NativeBuilder extends AbstractBuilder implements IBuilder<NativeModel> {
   children: NoeudModel[] = []

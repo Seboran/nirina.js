@@ -1,7 +1,7 @@
-import { VisiteurNoeud } from '../../..'
-import NativeModel from '../../../../model/html/native.model'
+import type { VisiteurNoeud } from '../../..'
+import type NativeModel from '../../../../model/html/native.model'
 import { AbstractVisiteurOrchestrateur } from '../../orchestrateur'
-import { NirinaComponent } from './NirinaComponent'
+import type { NirinaComponent } from './NirinaComponent'
 
 export default class NativeGenerator
   extends AbstractVisiteurOrchestrateur<NirinaComponent>

@@ -1,4 +1,4 @@
-import VisiteurNoeud from '../visiteurs/VisiteurNoeud'
+import type VisiteurNoeud from '../visiteurs/VisiteurNoeud'
 
 type Style = Record<string, string | number>
 
