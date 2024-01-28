@@ -16,6 +16,7 @@ import { Div } from '../../../../builder/NativeBuilder'
 import TextBuilder from '../../../../builder/TextBuilder'
 import type { NoeudModel } from '../../../../model'
 import ForHtmlGenerator from './ForHtmlGenerator'
+import BoutonBuilder from '../../../../builder/BoutonBuilder'
 
 // Create a new Window instance
 const window = new Window()
@@ -314,4 +315,37 @@ describe("liste dynamique d'éléments", () => {
       '<div for-0="" style="display: none"></div><div div-1="">1</div><div div-2="">2</div><div div-3="">3</div>',
     )
   })
+  test('affiche un bouton dans une liste dynamique, le bouton permet de faire disparaître un élément de la liste dynamique', () => {
+    const spy = vi.fn()
+    const button = BoutonBuilder().setOnClick(spy).setText('cliquez').build()
+
+    const listeDynamique = new ComputedList<NoeudModel>([
+      Div().addChild(TextBuilder('1')).addId('div-1').build(),
+      Div().addChild(TextBuilder('2')).addId('div-2').build(),
+    ])
+    const forHtml = new ForHtml(listeDynamique)
+    render(forHtml)
+
+    expectHtml(
+      '<div for-0="" style="display: none"></div><div div-1="">1</div><div div-2="">2</div>',
+    )
+
+    listeDynamique.value.state = [...listeDynamique.value.state, button]
+    expectHtml(
+      '<div for-0="" style="display: none"></div><div div-1="">1</div><div div-2="">2</div><button btn-1="">cliquez</button>',
+    )
+    ;(document.querySelector('[btn-1]') as HTMLButtonElement)?.click()
+    expect(spy).toHaveBeenCalled()
+  })
 })
+function expectHtml(expected: string) {
+  expect(window.document.body.innerHTML).toEqual(expected)
+}
+
+function render(component: NoeudModel) {
+  const generateur = new HtmlOrchestrateur()
+
+  const render = component.accept(generateur)
+  window.document.body.innerHTML = render.template
+  render.script()
+}
