@@ -20,9 +20,11 @@ import ForHtmlGenerator from './ForHtmlGenerator'
 // Create a new Window instance
 const window = new Window()
 
-// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 global.window = window
-// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 global.document = window.document
 beforeEach(() => {
   BoutonHtmlGenerator.nombreBoutons = 0
