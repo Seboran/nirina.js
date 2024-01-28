@@ -1,12 +1,14 @@
 import type { NoeudModel } from '.'
-import Button from './builder/BoutonBuilder'
-import For from './builder/ForBuilder'
-import If from './builder/IfBuilder'
-import { Div } from './builder/NativeBuilder'
-import Text from './builder/TextBuilder'
-import { ComputedList } from './model/ComputedList'
-import { ComputableValue } from './model/ComputedValue'
-import HtmlOrchestrateur from './visiteurs/impl/generator/html/HtmlOrchestrateur'
+import {
+  Bouton,
+  ComputableValue,
+  ComputedList,
+  Div,
+  For,
+  If,
+  Text,
+  mount,
+} from '.'
 
 const condition = new ComputableValue(true)
 const dynList = new ComputedList<NoeudModel>([
@@ -41,14 +43,11 @@ const elements = Div()
     Div()
       .addChild(Text('ouaip ?'))
       .addChild(
-        Button()
+        Bouton()
           .setOnClick(onClickBouton)
           .setText('je fais apparaître quelque chose'),
       ),
   )
   .addChild(For(dynList))
   .build()
-const generateur = new HtmlOrchestrateur()
-const nirinaComposant = elements.accept(generateur)
-document.querySelector('#app')!.innerHTML = nirinaComposant.template
-nirinaComposant.script()
+mount('#app', elements)

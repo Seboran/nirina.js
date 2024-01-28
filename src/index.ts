@@ -1,4 +1,5 @@
-export { default as insertCodeToMarkdown } from './createMarkdown';
-export * from './decorators';
-export * from './model';
-export * from './visiteurs';
+import { mount } from './visiteurs/render'
+
+export * from './model'
+export * from './builder'
+export { mount }
