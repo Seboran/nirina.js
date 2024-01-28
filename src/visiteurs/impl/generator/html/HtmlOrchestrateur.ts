@@ -26,6 +26,13 @@ const visiteurMappings: Array<
   [leafName, LeafHtmlGenerator],
   [spanName, NativeGenerator],
   ['div', NativeGenerator],
+  ['a', NativeGenerator],
+  ['img', NativeGenerator],
+  ['p', NativeGenerator],
+  ['h1', NativeGenerator],
+  ['h2', NativeGenerator],
+  ['h3', NativeGenerator],
+  ['h4', NativeGenerator],
   ['for', ForHtmlGenerator],
 ]
 

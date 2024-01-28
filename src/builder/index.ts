@@ -1,7 +1,7 @@
 import BoutonBuilder from './BoutonBuilder'
 import ForBuilder from './ForBuilder'
 import LeafBuilder from './LeafBuilder'
-import { Div, Span } from './NativeBuilder'
+import { Div, Span, default as Element } from './NativeBuilder'
 import TextBuilder from './TextBuilder'
 import IfBuilder from './IfBuilder'
 
@@ -13,4 +13,5 @@ export {
   Div,
   Span,
   IfBuilder as If,
+  Element,
 }

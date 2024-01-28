@@ -30,7 +30,7 @@ class NativeBuilder extends AbstractBuilder implements IBuilder<NativeModel> {
   }
 }
 
-export default (name: 'div' | 'span') => new NativeBuilder(name)
+export default (name: 'div' | 'span' | string) => new NativeBuilder(name)
 
 export const Div = () => new NativeBuilder('div')
 export const Span = () => new NativeBuilder('span')
