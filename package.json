@@ -6,7 +6,7 @@
     "serve": "vite serve",
     "dev": "vite",
     "test": "bun test --watch",
-    "build": "bun build src/index.js --outfile=dist/nirina.js",
+    "build": "bun build src/index.js --outdir=./dist --minify",
     "coverage": "bun test --coverage"
   },
   "devDependencies": {
