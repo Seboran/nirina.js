@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { beforeEach, describe, expect, test, jest as vi } from 'bun:test'
 import BoutonHtml from '../../../../model/html/bouton.model'
 import ElementsHtml from '../../../../model/html/elements.model'
@@ -228,7 +229,7 @@ describe('éléments natifs', () => {
 
   test("affiche un texte rouge à l'intérieur de divs un peu fancy", () => {
     const css: Record<string, string | number> = {}
-    css.color = 'red'
+    css['color'] = 'red'
     const nativeModel = new NativeModel('span', [
       new NativeModel('div', [new LeafHtml('salut')], css),
     ])
