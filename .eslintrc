@@ -1,0 +1,21 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended", // Ajoutez cette ligne
+  ],
+  "parser": "@typescript-eslint/parser", // Ajoutez cette ligne
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+  },
+  "plugins": [
+    "@typescript-eslint", // Ajoutez cette ligne
+  ],
+  "rules": {
+    "@typescript-eslint/consistent-type-imports": "error",
+  },
+}
