@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test } from 'vitest'
+import { beforeEach, describe, expect, test } from 'bun:test'
 import ElementsHtml from '../model/html/elements.model'
 import IfHtml from '../model/html/if.model'
 import LeafHtml from '../model/html/leaf.model'
@@ -48,18 +48,18 @@ describe('html builder', () => {
 
     window.document.body.innerHTML = nirinaComposant.template
     nirinaComposant.script()
-    expect(window.document.body.innerHTML).toMatchInlineSnapshot(
-      `"<button btn-1="" style="color: red">je ne regrette rien moi dessus!</button><div if-0="">un autre texte2</div>"`,
+    expect(window.document.body.innerHTML).toEqual(
+      `<button btn-1="" style="color: red">je ne regrette rien moi dessus!</button><div if-0="">un autre texte2</div>`,
     )
     // @ts-ignore
     window.document.body.children[0].click()
-    expect(window.document.body.innerHTML).toMatchInlineSnapshot(
-      `"<button btn-1="" style="color: red">je ne regrette rien moi dessus!</button><div if-0="">un autre texte</div>"`,
+    expect(window.document.body.innerHTML).toEqual(
+      `<button btn-1="" style="color: red">je ne regrette rien moi dessus!</button><div if-0="">un autre texte</div>`,
     )
     // @ts-ignore
     window.document.body.children[0].click()
-    expect(window.document.body.innerHTML).toMatchInlineSnapshot(
-      `"<button btn-1="" style="color: red">je ne regrette rien moi dessus!</button><div if-0="">un autre texte2</div>"`,
+    expect(window.document.body.innerHTML).toEqual(
+      `<button btn-1="" style="color: red">je ne regrette rien moi dessus!</button><div if-0="">un autre texte2</div>`,
     )
   })
 })
@@ -75,8 +75,8 @@ describe('native builder', () => {
 
     const nirinaComposant = mesDivsImbriquées.accept(new HtmlOrchestrateur())
 
-    expect(nirinaComposant.template).toMatchInlineSnapshot(
-      `"<div style="color: green"><span>bonjour</span></div>"`,
+    expect(nirinaComposant.template).toEqual(
+      `<div style="color: green"><span>bonjour</span></div>`,
     )
   })
 })
