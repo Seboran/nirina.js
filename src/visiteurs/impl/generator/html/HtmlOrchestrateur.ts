@@ -1,4 +1,4 @@
-import { NoeudModel } from '../../../../model'
+import type { NoeudModel } from '../../../../model'
 import {
   BOUTON_HTML_NAME,
   elements_name,
@@ -6,16 +6,18 @@ import {
   leafName,
   spanName,
 } from '../../../../model/html/node_constantes'
-import VisiteurNoeud from '../../../VisiteurNoeud'
+import type VisiteurNoeud from '../../../VisiteurNoeud'
 import { AbstractVisiteurOrchestrateur } from '../../orchestrateur'
 import BoutonHtmlGenerator from './BoutonHtmlGenerator'
 import ElementsHtmlGenerator from './ElementsHtmlGenerator'
+import ForHtmlGenerator from './ForHtmlGenerator'
 import IfHtmlGenerator from './IfHtmlGenerator'
 import LeafHtmlGenerator from './LeafHtmlGenerator'
 import NativeGenerator from './NativeGenerator'
-import { NirinaComponent } from './NirinaComponent'
+import type { NirinaComponent } from './NirinaComponent'
 
 const visiteurMappings: Array<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [string, new (...args: any[]) => VisiteurNoeud<NirinaComponent, NoeudModel>]
 > = [
   [BOUTON_HTML_NAME, BoutonHtmlGenerator],
@@ -24,6 +26,7 @@ const visiteurMappings: Array<
   [leafName, LeafHtmlGenerator],
   [spanName, NativeGenerator],
   ['div', NativeGenerator],
+  ['for', ForHtmlGenerator],
 ]
 
 export default class HtmlOrchestrateur extends AbstractVisiteurOrchestrateur<NirinaComponent> {

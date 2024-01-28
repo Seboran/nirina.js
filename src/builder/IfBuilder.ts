@@ -1,8 +1,8 @@
 import { NoeudModel } from '../model'
-import { ComputableValue } from '../model/ComputedValue'
+import type { ComputableValue } from '../model/ComputedValue'
 import IfHtml from '../model/html/if.model'
 import AbstractBuilder from './AbstractBuilder'
-import IBuilder from './IBuilder'
+import type IBuilder from './IBuilder'
 import HtmlBuilder from './htmlBuilder'
 
 type Element = NoeudModel | IBuilder<NoeudModel>

@@ -1,15 +1,18 @@
 import { NoeudModel } from '../model'
 import NativeModel from '../model/html/native.model'
 import AbstractBuilder from './AbstractBuilder'
-import IBuilder from './IBuilder'
+import type IBuilder from './IBuilder'
 
 class NativeBuilder extends AbstractBuilder implements IBuilder<NativeModel> {
   children: NoeudModel[] = []
+  uniqueId: string = ''
   constructor(private name: string) {
     super()
   }
   build(): NativeModel {
-    return new NativeModel(this.name, this.children).setStyle(this.style)
+    return new NativeModel(this.name, this.children)
+      .setStyle(this.style)
+      .setUniqueId(this.uniqueId)
   }
 
   addChild(child: NoeudModel | IBuilder<NoeudModel>): this {
@@ -18,6 +21,11 @@ class NativeBuilder extends AbstractBuilder implements IBuilder<NativeModel> {
     } else {
       this.children.push(child.build())
     }
+    return this
+  }
+
+  addId(id: string): this {
+    this.uniqueId = id
     return this
   }
 }

@@ -1,4 +1,4 @@
-import { ComputableValue } from '../ComputedValue'
+import type { ComputableValue } from '../ComputedValue'
 import NoeudModel from '../Noeud.model'
 import { ifName } from './node_constantes'
 

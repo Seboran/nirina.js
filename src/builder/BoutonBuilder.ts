@@ -1,6 +1,6 @@
 import BoutonHtml from '../model/html/bouton.model'
 import AbstractBuilder from './AbstractBuilder'
-import IBuilder from './IBuilder'
+import type IBuilder from './IBuilder'
 
 type AnyFunction = (...args: any[]) => any
 

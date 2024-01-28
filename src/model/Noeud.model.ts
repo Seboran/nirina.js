@@ -1,4 +1,4 @@
-import VisiteurNoeud from '../visiteurs/VisiteurNoeud'
+import type VisiteurNoeud from '../visiteurs/VisiteurNoeud'
 
 type Style = Record<string, string | number>
 
@@ -9,6 +9,11 @@ export default abstract class NoeudModel {
 
   setStyle(style: Style): this {
     this.style = style
+    return this
+  }
+
+  setUniqueId(id: string): this {
+    this.uniqueId = id
     return this
   }
 

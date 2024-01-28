@@ -1,6 +1,6 @@
-import LeafHtml from '../../../../model/html/leaf.model'
-import VisiteurNoeud from '../../../VisiteurNoeud'
-import { NirinaComponent } from './NirinaComponent'
+import type LeafHtml from '../../../../model/html/leaf.model'
+import type VisiteurNoeud from '../../../VisiteurNoeud'
+import type { NirinaComponent } from './NirinaComponent'
 
 export default class LeafHtmlGenerator
   implements VisiteurNoeud<NirinaComponent, LeafHtml>

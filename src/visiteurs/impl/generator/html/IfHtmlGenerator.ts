@@ -1,7 +1,7 @@
-import IfHtml from '../../../../model/html/if.model'
-import VisiteurNoeud from '../../../VisiteurNoeud'
+import type IfHtml from '../../../../model/html/if.model'
+import type VisiteurNoeud from '../../../VisiteurNoeud'
 import { AbstractVisiteurOrchestrateur } from '../../orchestrateur'
-import { NirinaComponent } from './NirinaComponent'
+import type { NirinaComponent } from './NirinaComponent'
 
 export default class IfHtmlGenerator
   extends AbstractVisiteurOrchestrateur<NirinaComponent>
@@ -31,7 +31,7 @@ export default class IfHtmlGenerator
         }
 
         condition.addListener((valeur) => {
-          let nIf = document.querySelector(`[${uniqueId}]`)
+          const nIf = document.querySelector(`[${uniqueId}]`)
           if (valeur) {
             nIf!.outerHTML = nirinaComponent.template
           } else {
