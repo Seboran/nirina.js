@@ -12,7 +12,7 @@ export default class ForHtmlGenerator
 {
   static nombreForHtml = 0
   visit({ dynList }: ForHtml): NirinaComponent {
-    const ids = dynList.value.state.map((l) => l.uniqueId)
+    let ids = dynList.value.state.map((l) => l.uniqueId)
     const nirinaComponents = dynList.value.state.map(super.visit.bind(this))
     const numberUniqueId = ForHtmlGenerator.nombreForHtml++
     const uniqueId = `for-${numberUniqueId}`
@@ -26,8 +26,8 @@ export default class ForHtmlGenerator
 
         dynList.addListener((nouveauElements) => {
           // Ajouter les nouveaux éléments à la fin de la liste d'éléments
-          const lastId = ids[ids.length - 1]
-          console.log(nouveauElements)
+          // const lastId = ids[ids.length - 1]
+          // console.log(nouveauElements)
           // pour l'instant, juste supprimer tous les éléments et regénérer une liste d'ids
           ids.forEach((id) => document.querySelector(`[${id}]`)?.remove())
           nouveauElements
@@ -39,6 +39,8 @@ export default class ForHtmlGenerator
                 ?.insertAdjacentHTML('afterend', d.template)
               d.script()
             })
+          
+            ids = nouveauElements.map(elt => elt.uniqueId)
         })
       },
     }

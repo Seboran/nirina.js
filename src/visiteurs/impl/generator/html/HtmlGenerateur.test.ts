@@ -251,7 +251,7 @@ describe("liste dynamique d'éléments", () => {
       '<div for-0 style="display: none"></div><div div-1>1</div><div div-2>2</div><div div-3>3</div>',
     )
   })
-  test.skip('affiche 2, puis 3 éléments', () => {
+  test('affiche 2, puis 3 éléments', () => {
     const listeDynamique = new ComputedList<NoeudModel>([
       Div().addChild(TextBuilder('1')).addId('div-1').build(),
       Div().addChild(TextBuilder('2')).addId('div-2').build(),
@@ -268,9 +268,44 @@ describe("liste dynamique d'éléments", () => {
     )
 
     listeDynamique.value.state = [
-      Div().addChild(TextBuilder('1')).build(),
-      Div().addChild(TextBuilder('2')).build(),
-      Div().addChild(TextBuilder('3')).build(),
+      Div().addChild(TextBuilder('1')).addId('div-1').build(),
+      Div().addChild(TextBuilder('2')).addId('div-2').build(),
+      Div().addChild(TextBuilder('3')).addId('div-3').build(),
+    ]
+
+    expect(window.document.body.innerHTML).toEqual(
+      '<div for-0="" style="display: none"></div><div div-1="">1</div><div div-2="">2</div><div div-3="">3</div>',
+    )
+  })
+  test('affiche 2, puis 3 éléments, mais pas plus', () => {
+    const listeDynamique = new ComputedList<NoeudModel>([
+      Div().addChild(TextBuilder('1')).addId('div-1').build(),
+      Div().addChild(TextBuilder('2')).addId('div-2').build(),
+    ])
+    const forHtml = new ForHtml(listeDynamique)
+    const generateur = new HtmlOrchestrateur()
+
+    const render = forHtml.accept(generateur)
+    window.document.body.innerHTML = render.template
+    render.script()
+
+    expect(window.document.body.innerHTML).toEqual(
+      '<div for-0="" style="display: none"></div><div div-1="">1</div><div div-2="">2</div>',
+    )
+
+    listeDynamique.value.state = [
+      Div().addChild(TextBuilder('1')).addId('div-1').build(),
+      Div().addChild(TextBuilder('2')).addId('div-2').build(),
+      Div().addChild(TextBuilder('3')).addId('div-3').build(),
+    ]
+
+    expect(window.document.body.innerHTML).toEqual(
+      '<div for-0="" style="display: none"></div><div div-1="">1</div><div div-2="">2</div><div div-3="">3</div>',
+    )
+    listeDynamique.value.state = [
+      Div().addChild(TextBuilder('1')).addId('div-1').build(),
+      Div().addChild(TextBuilder('2')).addId('div-2').build(),
+      Div().addChild(TextBuilder('3')).addId('div-3').build(),
     ]
 
     expect(window.document.body.innerHTML).toEqual(
