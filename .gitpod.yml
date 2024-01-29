@@ -14,7 +14,7 @@ tasks:
       } fi
       # Install dependencies
       bun install
-      
+
     command: |
       # Run project
-      npm run dev
+      bun run dev
