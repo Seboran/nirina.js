@@ -5,6 +5,12 @@
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 image: gitpod/workspace-bun
 
+additionalRepositories:
+    - url: https://github.com/Seboran/nirina-demonstrateur
+      # checkoutLocation is relative to /workspaces
+      checkoutLocation: demo
+workspaceLocation: nirina.js/gitpod.code-workspace # Relative to /workspace dir
+
 tasks:
   - name: Init a bun project and run
     init: |
@@ -18,3 +24,13 @@ tasks:
     command: |
       # Run project
       bun run dev
+
+  - name: backend
+      # change working directory as per configured in `checkoutLocation`
+      # which is configured above as `/workspaces/backend`
+    before: |
+        cd ../demo
+    init: |
+        bun i
+    command: |
+        bun run dev
