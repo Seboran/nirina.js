@@ -14,4 +14,9 @@ jobs:
           bun-version: latest
       - run: bun install
       - run: bun test --coverage
-      - run: bun run build
+      - run: |
+          cd packages/nirina.js
+          bun run build
+      - run: |
+          cd packages/playground
+          bun run build
