@@ -1,0 +1,32 @@
+{
+  "name": "nirina.js",
+  "version": "0.0.2-0",
+  "module": "dist/index.js",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "serve": "vite serve",
+    "dev": "vite",
+    "test": "bun test --watch",
+    "build": "bun build src/index.ts --outdir=./dist --minify",
+    "coverage": "bun test --coverage"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "20",
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@typescript-eslint/parser": "^6.19.1",
+    "eslint": "^8.56.0",
+    "happy-dom": "^13.0.6",
+    "prettier": "^3.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4",
+    "vite": "^5.0.12"
+  },
+  "files": [
+    "dist"
+  ]
+}

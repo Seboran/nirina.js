@@ -1,5 +1,5 @@
-import type { VisiteurNoeud } from '../../..'
 import type NativeModel from '../../../../model/html/native.model'
+import type VisiteurNoeud from '../../../VisiteurNoeud'
 import { AbstractVisiteurOrchestrateur } from '../../orchestrateur'
 import type { NirinaComponent } from './NirinaComponent'
 

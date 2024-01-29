@@ -3,7 +3,6 @@ import type { ComputableValue } from '../model/ComputedValue'
 import IfHtml from '../model/html/if.model'
 import AbstractBuilder from './AbstractBuilder'
 import type IBuilder from './IBuilder'
-import HtmlBuilder from './htmlBuilder'
 
 type Element = NoeudModel | IBuilder<NoeudModel>
 

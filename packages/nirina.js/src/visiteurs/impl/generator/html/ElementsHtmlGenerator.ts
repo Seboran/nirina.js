@@ -13,7 +13,7 @@ export default class ElementsHtmlGenerator
     return {
       template,
       script: () => {
-        parsedChildren.forEach(({ template, script }) => {
+        parsedChildren.forEach(({ script }) => {
           script()
         })
       },

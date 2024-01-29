@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { beforeEach, describe, expect, test } from 'bun:test'
 import ElementsHtml from '../model/html/elements.model'
 import IfHtml from '../model/html/if.model'
@@ -6,19 +7,17 @@ import HtmlOrchestrateur from '../visiteurs/impl/generator/html/HtmlOrchestrateu
 
 import { Window } from 'happy-dom'
 import { ComputableValue } from '../model/ComputedValue'
+import NativeModel from '../model/html/native.model'
 import BoutonBuilder from './BoutonBuilder'
-import LeafBuilder from './LeafBuilder'
 import NativeBuilder from './NativeBuilder'
 import TextBuilder from './TextBuilder'
-import IfBuilder from './IfBuilder'
-import NativeModel from '../model/html/native.model'
 
 // Create a new Window instance
 const window = new Window()
 
-// @ts-ignore
+// @ts-expect-error
 global.window = window
-// @ts-ignore
+// @ts-expect-error
 global.document = window.document
 beforeEach(() => {
   window.document.body.innerHTML = ''
@@ -51,12 +50,12 @@ describe('html builder', () => {
     expect(window.document.body.innerHTML).toEqual(
       `<button btn-1="" style="color: red">je ne regrette rien moi dessus!</button><div if-0="">un autre texte2</div>`,
     )
-    // @ts-ignore
+    // @ts-expect-error
     window.document.body.children[0].click()
     expect(window.document.body.innerHTML).toEqual(
       `<button btn-1="" style="color: red">je ne regrette rien moi dessus!</button><div if-0="">un autre texte</div>`,
     )
-    // @ts-ignore
+    // @ts-expect-error
     window.document.body.children[0].click()
     expect(window.document.body.innerHTML).toEqual(
       `<button btn-1="" style="color: red">je ne regrette rien moi dessus!</button><div if-0="">un autre texte2</div>`,
