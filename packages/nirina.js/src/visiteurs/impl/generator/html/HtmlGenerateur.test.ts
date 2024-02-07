@@ -238,6 +238,25 @@ describe('éléments natifs', () => {
       `<span><div style="color: red">salut</div></span>`,
     )
   })
+
+  test('affiche un texte avec une classe css', () => {
+    const texte = new NativeModel('span', [new LeafHtml('salut')])
+    texte.setClass('ma-classe')
+    render(texte)
+    expectHtml(`<span class="ma-classe">salut</span>`)
+  })
+
+  test('affiche une image', () => {
+    const image = new NativeModel(
+      'img',
+      [],
+      {},
+      ['src', '/mon-image.png'],
+      ['alt', 'mon texte alternatif'],
+    )
+    render(image)
+    expectHtml(`<img src="/mon-image.png" alt="mon texte alternatif">`)
+  })
 })
 
 describe("liste dynamique d'éléments", () => {

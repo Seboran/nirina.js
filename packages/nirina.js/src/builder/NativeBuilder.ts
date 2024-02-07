@@ -7,11 +7,12 @@ class NativeBuilder extends AbstractBuilder implements IBuilder<NativeModel> {
   children: NoeudModel[] = []
   uniqueId: string = ''
   className: string = ''
+  attrs: [string, string][] = []
   constructor(private name: string) {
     super()
   }
   build(): NativeModel {
-    return new NativeModel(this.name, this.children)
+    return new NativeModel(this.name, this.children, {}, ...this.attrs)
       .setStyle(this.style)
       .setClass(this.className)
       .setUniqueId(this.uniqueId)
@@ -33,6 +34,11 @@ class NativeBuilder extends AbstractBuilder implements IBuilder<NativeModel> {
 
   addClass(className: string): this {
     this.className = className
+    return this
+  }
+
+  addAttrs(attrs: [string, string][]): this {
+    this.attrs = attrs
     return this
   }
 }

@@ -13,6 +13,7 @@ export default class NativeGenerator
     style: css,
     uniqueId,
     className,
+    attrs: otherAttrs,
   }: NativeModel): NirinaComponent {
     const nirinaComponents = children.map(super.visit.bind(this))
     const templates = nirinaComponents.map(({ template }) => template).join('')
@@ -31,14 +32,21 @@ export default class NativeGenerator
     if (className) {
       attrs.push(`class="${className}"`)
     }
-
+    if (otherAttrs.length > 0) {
+      attrs.push(
+        otherAttrs.map(
+          ([attributeName, value]) => `${attributeName}="${value}"`,
+        ),
+      )
+    }
+    const template = children.length
+      ? `<${name}${attrs.length !== 0 ? ' ' + attrs.join(' ') : ''}>${templates}</${name}>`
+      : `<${name}${attrs.length !== 0 ? ' ' + attrs.join(' ') : ''} />`
     return {
       script: () => {
         nirinaComponents.forEach(({ script }) => script())
       },
-      template: `<${name}${
-        attrs.length !== 0 ? ' ' + attrs.join(' ') : ''
-      }>${templates}</${name}>`,
+      template: template,
     }
   }
 }

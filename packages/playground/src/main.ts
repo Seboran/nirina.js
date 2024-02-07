@@ -2,11 +2,13 @@ import { Div, Element, Text, mount } from 'nirina.js'
 import { CounterBouton } from './CounterBouton'
 import './style.css'
 import { useForNuméros } from './useForNuméros'
+import { LogoTypescript } from './LogoTypescript'
+import { LogoVite } from './LogoVite'
 
 const { miseAJourElements, ForNuméros } = useForNuméros()
 const app = Div()
-  .addChild(Element('a').addChild(Text('Logo de vitejs')))
-  .addChild(Element('a').addChild(Text('Logo de typescript')))
+  .addChild(LogoVite)
+  .addChild(LogoTypescript)
   .addChild(
     Element('h1').addChild(Text('Vite + TypeScript')).addClass('text-rouge'),
   )
