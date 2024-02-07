@@ -12,6 +12,7 @@ export default class NativeGenerator
     children,
     style: css,
     uniqueId,
+    className,
   }: NativeModel): NirinaComponent {
     const nirinaComponents = children.map(super.visit.bind(this))
     const templates = nirinaComponents.map(({ template }) => template).join('')
@@ -26,6 +27,9 @@ export default class NativeGenerator
     }
     if (uniqueId) {
       attrs.push(`${uniqueId}`)
+    }
+    if (className) {
+      attrs.push(`class="${className}"`)
     }
 
     return {
