@@ -1,5 +1,13 @@
 # nirina.js
 
+## Archivé
+
+Ce projet est archivé car créer son propre framework c'est so 2010, et je suis très déçu du fonctionnement de bun avec du front-end... Depuis quelques mois j'ai une incompatibilité avec happy dom qui ne se résout pas, la contribution à l'écosystème js est quasi nulle de leur part et je n'arrive pas à faire des choses simples comme choisir ma version de bun (rétrogradage)
+
+Pour l'instant, Bun reste à l'état de gadget.
+
+-------------
+
 Ce projet permet est un démonstrateur de création d'un framework front JS à partir du concept d'AST
 
 ## Comment lancer ce projet ? (TODO)
